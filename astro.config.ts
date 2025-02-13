@@ -11,7 +11,7 @@ import { spectreDark } from './src/ec-theme';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://singleparadox.github.io',
-  base: '/',
+  base: '/new-static-site',
   output: 'static',
   integrations: [
     expressiveCode({
