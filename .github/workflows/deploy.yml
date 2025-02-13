@@ -25,7 +25,7 @@ jobs:
         with:
           node-version: 20
           path: .
-          package-manager: npm@latest
+          package-manager: pnpm@latest
         
         # with:
           # path: . # The root location of your Astro project inside the repository. (optional)
