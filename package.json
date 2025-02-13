@@ -2,7 +2,7 @@
   "name": "",
   "type": "module",
   "version": "1.0.1",
-  "packageManager": "pnpm@9.15.0",
+  "packageManager": "pnpm@latest",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
