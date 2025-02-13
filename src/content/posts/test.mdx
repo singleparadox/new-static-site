@@ -1,0 +1,80 @@
+---
+title: "Doctrine may modify other documents"
+description: "Documents may be modified by other Doctrine documents"
+image: "../assets/background.jpg"
+createdAt: 02-12-2025
+draft: false
+tags:
+  - guide
+---
+
+At work, I am currently using MongoDB with Doctrine ODM. 
+
+
+## The Problem
+I have a document that are indirectly related to each other.
+
+Let's say I have a document called `Posts` and the `Posts` document has a function called `getComments` that returns a `CommentCollection`.
+
+We also have a document called `BackupComments`. The `BackupComments` document is just a place to store a modified version of the comments.
+Let's say we want to modify the format of the date from comments and store it in the `BackupComments` document.
+
+
+```php
+  $posts = $this->dm->getRepository(Posts::class)->findOne();
+  $comments = $posts->getComments();
+
+
+  // This will be where your problem is. We want to do it in an easy way
+  foreach ($comments as $comment) {
+    $backupComment = new BackupComments();
+
+    $modifiedComment = $comment->getComment();
+    $date = $comment->getDate();
+    $modifiedComment = $date->format('Y-m-d H:i:s') . ': ' . $modifiedComment;
+
+    $comment->setComment($modifiedComment);
+    
+    $backupComment->setComment($modifiedComment);
+    $this->dm->persist($backupComment);
+  }
+
+  $this->dm->flush();
+
+```
+
+The problem with this code is that the `Comment` document is being modified. This is because of how PHP references objects. 
+When you modify the `$comment` object, you are also modifying the `Comment` document indirectly.
+
+## Solution
+Thankfully, this is very easy to fix. You can use the `clone` keyword to create a new instance of the object or just modify the raw data.
+
+We will use the latter method in this example.
+
+```php
+  $posts = $this->dm->getRepository(Posts::class)->findOne();
+  $comments = $posts->getComments();
+
+  foreach ($comments as $comment) {
+    $backupComment = new BackupComments();
+
+    $modifiedComment = $comment->getComment();
+    $date = $comment->getDate();
+    $modifiedComment = $date->format('Y-m-d H:i:s') . ': ' . $modifiedComment;
+
+    $comment->setComment($modifiedComment);
+
+    // Just create a new instance of the Comment object
+    $newComment = new Comment();
+    $newComment->setComment($modifiedComment);
+    
+    // This will not modify the original Comment object
+    $backupComment->setComment($modifiedComment);
+    $this->dm->persist($backupComment);
+  }
+
+  $this->dm->flush();
+
+```
+
+Now, the `Comment` document will not be modified. The `BackupComments` document will have the modified comments.

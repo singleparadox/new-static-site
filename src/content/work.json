@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "duration": "May 2018 - Jun 2018",
+    "company": "University of Santo Tomas Legazpi",
+    "title": "Intern",
+    "description": "Developed an application where users will be able to store and modify various student data."
+  },
+  {
+    "id": 2,
+    "duration": "Sep 2019 - May 2022",
+    "company": "JMH IT Solutions",
+    "title": "Site Reliability Engineer",
+    "description": "Worked as a developer for RBGIV2 system and backend of the ASENSO Mobile App."
+  },
+  {
+    "id": 3,
+    "duration": "Jun 2022 - present",
+    "company": "synQup Gmbh",
+    "title": "Backend Developer",
+    "description": "I'm currently a backend developer at synQup, where I've worked on a range of projects—from internal tools to customer modules. This role has given me exposure to a variety of codebases, from legacy systems to modern architectures. \n\nI've also handled data-intensive projects, including developing a module capable of processing millions of records efficiently. The only real limitation was PHP itself. Along the way, I’ve gained extensive experience with Docker, Kubernetes, and setting up CI/CD pipelines, which have become an integral part of my workflow."
+  }
+]
